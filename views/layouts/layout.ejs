@@ -6,10 +6,8 @@
     <title>My Library</title>
 </head>
 <body>
-    Before
-    <br />
-    <%- body %>
-    <br />
-    After
+    <%- include('../partials/header.ejs') %>
+    <%- include('../partials/errMessage.ejs') %>
+    <%- body %> <!-- This is where the content of the view will be rendered -->
 </body>
 </html>
