@@ -10,17 +10,22 @@ router.get('/', async (req, res) => {
     }
     try{
         const authors = await Author.find(searchOptions);
-        res.render('authors/index', { authors, searchOptions: req.query});
+        // res.render('authors/index', { authors, searchOptions: req.query});
+        res.render('authors/index', { authors, authorObj: req.query});
     }catch(err){
-        conssole.log(err);
         res.redirect('/');
     }
     // res.render('authors/index');
 })
 
 // New Authur Route
-router.get('/new', (req, res) => {
-    res.render('authors/new', {author: new Author() });
+// router.get('/new', (req, res) => {
+router.get('/new', async (req, res) => {
+    // let author = new Author(); // create a new author object
+    let authorObj = new Author(); // create a new/blanc author object
+    const authors = await Author.find({}); // get all authors, returns an array
+    // res.render('authors/new', { author });
+    res.render('authors/new', { authors, authorObj });
 })
 
 // Create Authur Route

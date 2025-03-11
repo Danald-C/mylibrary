@@ -1,7 +1,6 @@
 <h2>Search Arthors</h2>
 <form action="/authors" method="GET">
-    <label>Name</label>
-    <input input type="text" name="name" value="<%= searchOptions.name %>" />
+    <%- include('_form_fields') %>
     <button type="submit">Search</button>
 </form>
 <br />
