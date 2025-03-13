@@ -1,3 +1,4 @@
+// https://pqina.nl/filepond/docs/api/plugins
 FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginImageResize, FilePondPluginFileEncode)
 // const pond = FilePond.create();
 FilePond.setOptions({

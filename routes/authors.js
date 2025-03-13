@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Author = require('../model/author');
+const Book = require('../model/books');
 
 // All Authurs Route
 router.get('/', async (req, res) => {
@@ -31,17 +32,106 @@ router.get('/new', async (req, res) => {
 // Create Authur Route
 router.post('/', (req, res) => {
     const author = new Author({
-        name: req.body.name // get uses query, post uses body
+        name: req.body.name // get uses req.query, post uses req.body & request strings ?name=value&name=value uses req.params
     })
     author.save().then(newAuthor => {
-        // res.redirect(`authors/${newAuthor.id}`);
-        res.redirect('authors');
+        res.redirect(`/authors/${newAuthor.id}`);
+        // res.redirect('authors');
     }).catch(err => {
         res.render('authors/new', {
             author,
             errorMessage: 'Error creating Author'
         });
     });
+})
+
+router.get('/:id', async (req, res) => {
+    try{
+        const author = await Author.findById(req.params.id)
+        const books = await Book.find({ author: author.id }).limit(6).exec()
+        res.render('authors/show', { booksByAuthor: books, authorObj: author })
+    }catch(err){
+        // console.log(err);
+        res.redirect('/')
+    }
+})
+
+router.get('/:id/edit', async (req, res) => {
+    try{
+        const author = await Author.findById(req.params.id)
+        res.render('authors/edit', { authorObj: author})
+    }catch{
+        res.redirect('/author')
+    }
+})
+router.put('/:id', (req, res) => {
+    let author = Author.findById(req.params.id).then(record => {
+        record.name = req.body.name
+        record.save().then(updatedAuthor => {
+            res.redirect(`/authors/${updatedAuthor.id}`)
+        }).catch(err => {
+            if(author == null){
+                res.redirect('/');
+            }else{ 
+                res.render('authors/edit', {
+                    authorObj: author,
+                    errorMessage: 'Error updating Author'
+                })
+            }
+        })
+    }).catch(err => {})
+})
+router.delete('/:id', async (req, res) => { // Never use a GET request to delete data. Because it can be accessed by a search engine and a user can accidentally click on it.
+    // let author = Author.findById(req.params.id).then(record => {
+    // let author = await Author.findById(req.params.id).then(record => {
+        /* record.remove().then(() => res.redirect('/authors')).catch(err => {
+            if(author == null){
+                res.redirect('/');
+            }else{ 
+                // res.redirect(`/authors/${record.id}`)
+        }
+        }) */
+        /* let query = record.remove({ _id: req.params.id })
+        query.exec((err, result) => {
+            if(err){
+                if(record == null){
+                    res.redirect('/');
+                }else{ 
+                    res.redirect(`/authors/${record.id}`)
+                }
+            }else{
+                res.redirect('/authors')
+        }
+        }) */
+       // })
+       
+    /* let author
+    try{
+        author = await Author.findById(req.params.id)
+        await author.remove()
+        res.redirect('/authors')
+    }catch(err){
+        console.log(err);
+        if(author == null){
+            res.redirect('/');
+        }else{ 
+            res.redirect(`/authors/${author.id}`)
+        }
+    } */
+
+    let author
+    try{
+        author = await Author.findById(req.params.id)
+        await author.deleteOne({ _id: author.id })
+        res.redirect('/authors')
+    }catch(err){
+        console.log(err);
+        if(author == null){
+            res.redirect('/');
+        }else{ 
+            res.redirect(`/authors/${author.id}`)
+        }
+    }
 })
 
 module.exports = router;
