@@ -1,22 +1,22 @@
 <div>
     <label>Title</label>
-    <input type="text" name="title" value="<%= book.name %>" />
+    <input type="text" name="title" value="<%= bookObj.title %>" />
 </div>
 <div>
     <label>Author</label>
     <select name="author">
         <% authors.forEach(author => { %>
-            <option label="<%= author.name %>" value="<%= author._id %>" <%= author._id === book.author ? 'selected' : '' %>><%= author.name %></option>
+            <option label="<%= author.name %>" value="<%= author.id %>" <%= bookObj.id !== 'null' && author.id == bookObj.author ? 'selected' : '' %> />
         <% }) %>
     </select>
 </div>
 <div>
     <label>Published Date</label>
-    <input type="date" name="publishDate" value="<%= book.publishDate == null ? '' : book.publishDate.toISOString().split('T')[0] %>" />
+    <input type="date" name="publishDate" value="<%= bookObj.publishDate == null ? '' : bookObj.publishDate.toISOString().split('T')[0] %>" />
 </div>
 <div>
     <label>Page Count</label>
-    <input type="number" name="pageCount" min="1" value="<%= book.pageCount == null ? 1 : book.pageCount %>" />
+    <input type="number" name="pageCount" min="1" value="<%= bookObj.pageCount == null ? 1 : bookObj.pageCount %>" />
 </div>
 <div>
     <label>Cover</label>
@@ -24,5 +24,5 @@
 </div>
 <div>
     <label>Description</label>
-    <textarea name="description"><%= book.description %></textarea>
+    <textarea name="description"><%= bookObj.description %></textarea>
 </div>

@@ -26,9 +26,11 @@ router.get('/', async (req, res) => {
         query = query.gte('publishDate', rQuery.publishedAfter) // .gte() is a mongoose method that means greater than or equal to.
     }
     try{
+        const authors = await Author.find({});
         // const books = await Book.find({})
         const books = await query.exec()
-        res.render('books/index', { books, bookObj: rQuery })
+        // res.render('books/index', { books, bookObj: rQuery })
+        res.render('books/index', { books, bookObj: rQuery, authors })
     }catch{
         res.redirect('/')
     }
@@ -38,6 +40,27 @@ router.get('/', async (req, res) => {
 // New Book Route
 router.get('/new', async (req, res) => {
     renderNewPage(res, new Book())
+})
+
+// Show Book Route
+router.get('/:id', async (req, res) => {
+    try{
+        const book = await Book.findById(req.params.id).populate('author').exec()
+        // console.log(book)
+        res.render('books/show', { book })
+    }catch{
+        res.redirect('/')
+    }
+})
+
+// Edit Book Route
+router.get('/:id/edit', async (req, res) => {
+    try{
+        const book = await Book.findById(req.params.id)
+        renderEditPage(res, book)
+    }catch{
+        res.redirect('/')
+    }
 })
 
 // Create Book Route
@@ -56,8 +79,8 @@ router.post('/', async (req, res) => {
 
     try{
         const newBook = await book.save();
-        // res.redirect(`books/${newBook.id}`);
-        res.redirect(`books`);
+        res.redirect(`books/${newBook.id}`);
+        // res.redirect(`books`);
     }catch(err){
         // if(book.coverImageName != null) removeBookCover(book.coverImageName);
         renderNewPage(res, book, true)
@@ -65,14 +88,76 @@ router.post('/', async (req, res) => {
     // res.send('Create Book');
 })
 
+// Update Book Route
+router.put('/:id', async (req, res) => {
+    let book
+    try{
+        book = await Book.findById(req.params.id);
+        book.title = req.body.title;
+        book.author = req.body.author;
+        book.publishDate = new Date(req.body.publishDate);
+        book.pageCount = req.body.pageCount;
+        book.description = req.body.description;
+        if(req.body.cover != null && req.body.cover !== '') saveCover(book, req.body.cover);
+        book.save();
+        res.redirect(`/books/${book.id}`);
+        // res.redirect(`books`);
+    }catch(err){
+        console.log(err)
+        // if(book.coverImageName != null) removeBookCover(book.coverImageName);
+        if(book != null){
+            renderEditPage(res, book, true)
+        }else{
+            res.redirect('/')
+        }
+    }
+    // res.send('Create Book');
+})
+router.delete('/:id', async (req, res) => {
+    let books
+    let book
+    try{
+        book = await Book.findById(req.params.id).exec()
+        await book.deleteOne({ id: req.params.id }).exec()
+        // console.log(req.params)
+        
+        res.redirect('/books')
+    }catch(err){
+        console.log(err, book);
+        // book = await books.findOne({ id: req.params.id })
+        if(book != null){
+            res.redirect('books/show', { book, errorMessage: 'Could not remove book' });
+        }else{ 
+            res.redirect(`/`)
+        }
+    }
+})
+
 
 async function renderNewPage(res, book, hasError=false){
-    try{
+    /* try{
         const authors = await Author.find({});
         const params = { authors, book };
         if(hasError) params.errorMessage = 'Error Creating Book';
         // console.log('bookSchema:', { authors, book })
         res.render('books/new', params);
+    }catch(err){
+        res.redirect('/books');
+    } */
+    renderFormPage(res, book, 'new', hasError)
+}
+async function renderEditPage(res, book, hasError=false){
+    renderFormPage(res, book, 'edit', hasError)
+}
+async function renderFormPage(res, book, form, hasError=false){
+    try{
+        const authors = await Author.find({});
+        // const params = { authors, book };
+        const params = { authors, bookObj: book };
+        let errPrefix = form === 'new' ? 'Crea' : 'Upda';
+        if(hasError) params.errorMessage = 'Error '+errPrefix+'ting Book';
+        // console.log('bookSchema:', { authors, book })
+        res.render(`books/${form}`, params);
     }catch(err){
         res.redirect('/books');
     }

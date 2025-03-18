@@ -82,48 +82,25 @@ router.put('/:id', (req, res) => {
     }).catch(err => {})
 })
 router.delete('/:id', async (req, res) => { // Never use a GET request to delete data. Because it can be accessed by a search engine and a user can accidentally click on it.
-    // let author = Author.findById(req.params.id).then(record => {
-    // let author = await Author.findById(req.params.id).then(record => {
-        /* record.remove().then(() => res.redirect('/authors')).catch(err => {
-            if(author == null){
-                res.redirect('/');
-            }else{ 
-                // res.redirect(`/authors/${record.id}`)
-        }
-        }) */
-        /* let query = record.remove({ _id: req.params.id })
-        query.exec((err, result) => {
-            if(err){
-                if(record == null){
-                    res.redirect('/');
-                }else{ 
-                    res.redirect(`/authors/${record.id}`)
-                }
-            }else{
-                res.redirect('/authors')
-        }
-        }) */
-       // })
-       
-    /* let author
-    try{
-        author = await Author.findById(req.params.id)
-        await author.remove()
-        res.redirect('/authors')
-    }catch(err){
-        console.log(err);
-        if(author == null){
-            res.redirect('/');
-        }else{ 
-            res.redirect(`/authors/${author.id}`)
-        }
-    } */
-
     let author
     try{
-        author = await Author.findById(req.params.id)
-        await author.deleteOne({ _id: author.id })
-        res.redirect('/authors')
+        author = await Author.findOne({ id: req.params.id })
+        await author.deleteOne()
+        
+        // Check whether this Author already have books
+        /* Book.find({ author: author.id }).then(async (books) => {
+            if(books.length > 0){
+                console.log(new Error('This author has books still'))
+                res.redirect(`/authors/${author.id}`)
+            }else{
+                    await author.deleteOne()
+                    res.redirect('/authors')
+                }
+            }, (err) => {
+                new Error(err)
+            }) */
+            
+         res.redirect('/authors')
     }catch(err){
         console.log(err);
         if(author == null){

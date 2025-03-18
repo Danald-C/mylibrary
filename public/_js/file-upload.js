@@ -1,10 +1,10 @@
-// https://pqina.nl/filepond/docs/api/plugins
+/* https://pqina.nl/filepond/docs/api/plugins */
 FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginImageResize, FilePondPluginFileEncode)
-// const pond = FilePond.create();
+/* const pond = FilePond.create(); */
 FilePond.setOptions({
     stylePanelAspectRatio: 150 / 100,
     imageResizeTargetWidth: 100,
     imageResizeTargetHeight: 150
 });
 
-FilePond.parse(document.body);
+// FilePond.parse(document.body);
