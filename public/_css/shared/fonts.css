@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'Quicksand';
+    src: url('../../fonts/QuicksandLight-Regular.woff2') format('woff2'),
+        url('../../fonts/QuicksandLight-Regular.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Futurist Fixed-width';
+    src: url('../../fonts/FuturistFixedWidthRegular.woff2') format('woff2'),
+        url('../../fonts/FuturistFixedWidthRegular.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+

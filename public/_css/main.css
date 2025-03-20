@@ -1,0 +1,68 @@
+@import 'shared/fonts.css';
+@import 'shared/variables.css';
+@import 'shared/header.css';
+@import 'shared/buttons.css';
+
+:root{
+    /* font-size: 1.6em; */
+    font-family: 'Quicksand';
+    font-size: '20px';
+    color: var(--color-text-light)    
+}
+
+*::before, *::after{
+    box-sizing: border-box;
+}
+
+/* img{
+    max-width: 100%;
+    height: auto;
+    border: 2px solid red;
+} */
+ 
+body{
+    background: linear-gradient(to right, var(--color-background-dark), var(--color-background-light))
+}
+
+.container{
+    max-width: 1200px;
+    margin: auto;
+    margin-bottom: 4rem;
+    }
+.inner-container{
+    margin: 0 2rem
+}
+
+.header-nav{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5rem;
+}
+.headernav ul{
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+.header-nav ul{
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+.header-nav ul li{
+    list-style: none;
+}
+.header-nav li a{
+    text-decoration: none;
+    color: var(--color-text-light);
+    font-weight: var(--nav-link-font-weight);
+    padding: 1rem;
+}
+.header-nav li a:hover, .header-title:hover{
+    color: white;
+}
+.page-header{
+    font-size: 2rem;
+    font-weight: 500;
+}

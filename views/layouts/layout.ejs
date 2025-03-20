@@ -13,10 +13,16 @@
     <script defer src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
     <script defer src="../_js/file-upload.js"></script>
     <!-- <script src="https://unpkg.com/filepond-plugin-image-preview@^4/dist/filepond-plugin-image-preview.js"></script> -->
+
+    <link href="../_css/main.css" rel="stylesheet" />
 </head>
 <body>
-    <%- include('../partials/header.ejs') %>
-    <%- include('../partials/errMessage.ejs') %>
-    <%- body %> <!-- This is where the content of the view will be rendered -->
+    <div class="container">
+        <%- include('../partials/header.ejs') %>
+        <div class="inner-container">
+            <%- include('../partials/errMessage.ejs') %>
+            <%- body %> <!-- This is where the content of the view will be rendered -->
+        </div>
+    </div>
 </body>
 </html>
