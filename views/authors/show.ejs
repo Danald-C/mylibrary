@@ -1,9 +1,11 @@
 <h2 class="page-header"><%= authorObj.name %></h2>
-<a href="/authors/<%= authorObj.id %>/edit">Edit</a>
-<%- include('../partials/deleteForm', { url: `/authors/${authorObj.id}` }) %>
-<a href="/authors">&laquo; Back</a>
+<div class="btn-row">
+    <a class="btn btn-primary" href="/authors/<%= authorObj.id %>/edit">Edit</a>
+    <%- include('../partials/deleteForm', { url: `/authors/${authorObj.id}` }) %>
+    <a class="btn btn-danger" href="/authors">&laquo; Back</a>
+</div>
 <% if(booksByAuthor.length > 0){ %>
-    <h2>Books By Author</h2>
+    <h2 class="page-header">Books By Author</h2>
     <% booksByAuthor.forEach(book => { %>
         <a href="/books/<%= book.id %>">
             <img width="150" height="100" src="<%= book.coverImagePath %>" />

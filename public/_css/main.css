@@ -2,6 +2,7 @@
 @import 'shared/variables.css';
 @import 'shared/header.css';
 @import 'shared/buttons.css';
+@import 'shared/form.css';
 
 :root{
     /* font-size: 1.6em; */
@@ -10,7 +11,7 @@
     color: var(--color-text-light)    
 }
 
-*::before, *::after{
+*, *::before, *::after{
     box-sizing: border-box;
 }
 
@@ -40,7 +41,7 @@ body{
     align-items: center;
     margin-bottom: 5rem;
 }
-.headernav ul{
+.header-nav ul{
     display: flex;
     margin: 0;
     padding: 0;

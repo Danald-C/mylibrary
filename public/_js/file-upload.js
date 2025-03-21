@@ -1,4 +1,5 @@
 /* https://pqina.nl/filepond/docs/api/plugins */
+// console.log(FilePond);
 FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginImageResize, FilePondPluginFileEncode)
 /* const pond = FilePond.create(); */
 FilePond.setOptions({
@@ -6,5 +7,4 @@ FilePond.setOptions({
     imageResizeTargetWidth: 100,
     imageResizeTargetHeight: 150
 });
-
-// FilePond.parse(document.body);
+FilePond.parse(document.body);
