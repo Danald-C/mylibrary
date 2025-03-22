@@ -3,6 +3,8 @@
 @import 'shared/header.css';
 @import 'shared/buttons.css';
 @import 'shared/form.css';
+@import 'shared/author.css';
+@import 'shared/books.css';
 
 :root{
     /* font-size: 1.6em; */
@@ -66,4 +68,9 @@ body{
 .page-header{
     font-size: 2rem;
     font-weight: 500;
+}
+.error-message{
+    color: hsl(var(--color-danger-hue), 100%, 50%);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
 }

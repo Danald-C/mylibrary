@@ -20,13 +20,8 @@
         <button class="btn btn-primary" type="submit">Search</button>
     </div>
 </form>
-<div>
-    <% books.forEach(book => { %>
-        <a class="btn btn-primary" href="/books/<%= book.id %>">
-            <img width="150" height="100" src="<%= book.coverImagePath %>" />
-        </a>
-    <% }) %>
-</div> 
+<br />
+<%- include('../partials/bookGrid', { books, bookGridClass: 'book-grid-3', bookCoverClass: 'book-cover-3' }) %>
  <!-- The above code is the view file for the books index page. It contains a form to search for books based on the title, publishedAfter, and publishedBefore fields. The form sends a GET request to the /books route. The form fields are pre-populated with the values from the bookObj object. The books array is iterated over to display the cover image of each book. 
  The bookObj object is passed from the controller to the view. It contains the values of the title, publishedAfter, and publishedBefore fields. 
  The books array is also passed from the controller to the view. It contains the list of books that match the search criteria. 

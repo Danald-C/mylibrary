@@ -20,7 +20,6 @@ router.get('/', async (req, res) => {
 })
 
 // New Authur Route
-// router.get('/new', (req, res) => {
 router.get('/new', async (req, res) => {
     // let author = new Author(); // create a new author object
     let authorObj = new Author(); // create a new/blanc author object
@@ -39,7 +38,7 @@ router.post('/', (req, res) => {
         // res.redirect('authors');
     }).catch(err => {
         res.render('authors/new', {
-            author,
+            authorObj: author,
             errorMessage: 'Error creating Author'
         });
     });
